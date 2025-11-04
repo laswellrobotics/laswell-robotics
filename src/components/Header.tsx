@@ -9,6 +9,7 @@ export const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/75">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
+          <img src="/logo.png" alt="Laswell Robotics logo" className="h-8 w-8 rounded" />
           <span className="text-2xl font-heading font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Laswell Robotics
           </span>
