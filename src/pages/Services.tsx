@@ -1,8 +1,14 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Box, Cpu, Hexagon, Zap, CircuitBoard, ExternalLink } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Box, Cpu, Hexagon, Zap, CircuitBoard, ExternalLink, Wrench } from "lucide-react";
+
+// service images
+import img3d from "@/assets/service-3d-printing.jpg";
+import imgDesign from "@/assets/service-design.jpg";
+import imgMachining from "@/assets/service-machining.jpg";
+import imgLaser from "@/assets/service-laser.jpg";
 
 export default function Services() {
   // Replace this with your actual Google Form URL
@@ -14,6 +20,7 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       icon: Box,
       title: "3D Printing",
       description: "High-quality additive manufacturing for rapid prototyping and production",
+      image: img3d,
       details: [
         "FDM (PLA/ABS/PETG/TPU/Nylon) & SLA (engineering resins)",
         "Layer height 0.1–0.3 mm, typical tolerance ±0.2 mm or ±0.2%",
@@ -33,6 +40,7 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       icon: Cpu,
       title: "Designing & Modeling",
       description: "Professional CAD design and 3D modeling services",
+      image: imgDesign,
       details: [
         "Design from sketches or reference models",
         "DFM optimization and tolerance analysis",
@@ -51,6 +59,7 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       icon: Hexagon,
       title: "Machining Services",
       description: "Precision CNC machining for metal and plastic parts",
+      image: imgMachining,
       details: [
         "3-axis and 4-axis milling, CNC turning",
         "Materials: Aluminum, Steel, Brass, Copper, Delrin, Acrylic",
@@ -69,6 +78,7 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       icon: Zap,
       title: "Laser Cutting & Engraving",
       description: "High-precision laser cutting and engraving services",
+      image: imgLaser,
       details: [
         "CO2 (non-metals) & fiber laser (metals)",
         "Work area up to 600 × 400 mm",
@@ -87,6 +97,7 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       icon: CircuitBoard,
       title: "Custom PCB Design",
       description: "Professional PCB design and prototyping",
+      image: imgDesign,
       details: [
         "Schematic capture, layout, BOM & DFM checks",
         "Up to 6 layers, 6/6 mil trace/space typical",
@@ -98,6 +109,25 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
         { label: "Layers", value: "2–6" },
         { label: "Trace/Space", value: "6/6 mil typical" },
         { label: "Deliverables", value: "Gerbers, BoM, Pick&Place, Schematics" }
+      ]
+    },
+    {
+      id: "custom-projects",
+      icon: Wrench,
+      title: "Custom Projects",
+      description: "Turnkey product development and one‑off automation",
+      image: imgMachining,
+      details: [
+        "Discovery & requirements definition",
+        "System design: mechanics, electronics, control",
+        "Fabrication, integration and firmware",
+        "Testing, validation and documentation",
+        "Handover, training and after‑delivery support"
+      ],
+      specs: [
+        { label: "Deliverables", value: "CAD, PCB, firmware, BOM, drawings, manuals" },
+        { label: "Engagement", value: "Fixed bid or Time & Materials" },
+        { label: "NDA", value: "Available on request" }
       ]
     }
   ] as const;
@@ -114,32 +144,33 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
                 Our Services
               </h1>
               <p className="text-xl text-muted-foreground">
-                From concept to production, we offer comprehensive manufacturing and design services
+                From concept to production, we combine CAD, machining, additive manufacturing, electronics and firmware to deliver end‑to‑end solutions.
               </p>
             </div>
 
-            <Accordion type="single" collapsible className="max-w-4xl mx-auto">
-              {services.map((service) => (
-                <AccordionItem key={service.id} value={service.id}>
-                  <AccordionTrigger className="text-left hover:no-underline">
-                    <div className="flex items-center gap-4">
-                      <service.icon className="h-6 w-6 text-primary flex-shrink-0" />
-                      <div>
-                        <h3 className="text-xl font-heading font-bold">{service.title}</h3>
-                        <p className="text-sm text-muted-foreground">{service.description}</p>
+            <div className="max-w-5xl mx-auto space-y-16">
+              {services.map((service, idx) => {
+                const ImageFirst = idx % 2 === 1; // alternate layout
+                return (
+                  <div key={service.id} className="grid md:grid-cols-2 gap-8 items-center">
+                    {ImageFirst && (
+                      <img src={(service as any).image} alt={`${service.title} image`} className="w-full rounded-xl shadow-lg" />
+                    )}
+
+                    <div>
+                      <div className="flex items-center gap-3 mb-3">
+                        <service.icon className="h-6 w-6 text-primary" />
+                        <h3 className="text-2xl font-heading font-bold">{service.title}</h3>
                       </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-10 pt-4 space-y-4">
-                      <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                        {service.details.map((detail, index) => (
-                          <li key={index}>{detail}</li>
+                      <p className="text-muted-foreground mb-4">{service.description}</p>
+                      <ul className="list-disc list-inside space-y-2 text-muted-foreground mb-4">
+                        {service.details.map((d, i) => (
+                          <li key={i}>{d}</li>
                         ))}
                       </ul>
 
                       {"specs" in service && (
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
                           {(service as any).specs?.map((s: { label: string; value: string }, i: number) => (
                             <div key={i} className="rounded-md border p-3 text-sm">
                               <div className="text-muted-foreground">{s.label}</div>
@@ -149,18 +180,44 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
                         </div>
                       )}
 
-                      <Button 
-                        onClick={() => window.open(googleFormUrl, '_blank')}
-                        className="mt-4"
-                      >
-                        Request Quote
-                        <ExternalLink className="ml-2 h-4 w-4" />
+                      <Button onClick={() => window.open(googleFormUrl, '_blank')}>
+                        Request Quote <ExternalLink className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+
+                    {!ImageFirst && (
+                      <img src={(service as any).image} alt={`${service.title} image`} className="w-full rounded-xl shadow-lg order-first md:order-none" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Professional sections */}
+            <div className="mt-16 grid md:grid-cols-2 gap-6">
+              <Card className="p-6">
+                <h3 className="font-heading font-bold text-lg mb-2">Why choose Laswell</h3>
+                <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                  <li>Single vendor from design to parts to assembly</li>
+                  <li>Transparent pricing and fast, realistic lead times</li>
+                  <li>Quality control on every batch and test reports on request</li>
+                </ul>
+              </Card>
+              <Card className="p-6">
+                <h3 className="font-heading font-bold text-lg mb-2">Engagement models</h3>
+                <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                  <li>Fixed‑bid for well‑defined scope</li>
+                  <li>Time & Materials for iterative R&D</li>
+                  <li>NDA and IP assignment available</li>
+                </ul>
+              </Card>
+            </div>
+
+            <div className="text-center mt-10">
+              <Button onClick={() => window.open(googleFormUrl, '_blank')} size="lg" className="px-10">
+                Start a Custom Project <ExternalLink className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </section>
       </main>

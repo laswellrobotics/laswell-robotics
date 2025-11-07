@@ -129,3 +129,24 @@ All colors MUST be HSL.
     @apply font-mono;
   }
 }
+
+/* Smooth, non-janky reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Lightweight blob animation for background accents */
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(12px, -16px) scale(1.05); }
+  66% { transform: translate(-12px, 8px) scale(0.98); }
+}
+.animate-blob { animation: blob 12s ease-in-out infinite; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }

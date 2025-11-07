@@ -1,101 +1,111 @@
-import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { toast } from "sonner";
+import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
 export default function About() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const googleFormUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQuXUkT0MthngXRUnx1Ewo1kc8ZYjbO9wzg/viewform?usp=dialog";
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Message sent! We'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
-  };
+  const contacts = [
+    {
+      icon: Mail,
+      title: "Email",
+      value: "laswellrobotics@gmail.com",
+      href: "mailto:laswellrobotics@gmail.com",
+    },
+    {
+      icon: Phone,
+      title: "Phone",
+      value: "+91 84698 02004",
+      href: "tel:+918469802004",
+    },
+    {
+      icon: MapPin,
+      title: "Location",
+      value: "Ahmedabad & Surat",
+    },
+  ] as const;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1 py-20">
-        <div className="container max-w-4xl">
-          <section className="mb-20">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-center">
-              About Us
+        <div className="container max-w-5xl">
+          <section className="mb-20 text-center">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-3">
+              START YOUR <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">PROJECT</span>
             </h1>
-            <Card className="p-8 md:p-12">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Ready to bring your ideas to life? Get in touch with our team today.
+            </p>
+          </section>
+
+          {/* About Us content */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-heading font-bold mb-6 text-center">About Us</h2>
+            <Card className="p-8 md:p-12 mb-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-lg text-muted-foreground mb-6">
-                  Laswell Robotics is a leading provider of on-demand manufacturing, robotics, and automation services. 
-                  We specialize in transforming innovative ideas into reality through cutting-edge technology and expert craftsmanship.
+                  Laswell Robotics is a leading provider of on-demand manufacturing, robotics, and automation services. We
+                  transform innovative ideas into reality through precision engineering and modern fabrication technology.
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Our mission is to make advanced manufacturing accessible to everyone—from individual makers and startups 
-                  to established enterprises. With state-of-the-art equipment and a team of experienced engineers, we deliver 
-                  high-quality results on every project.
-                </p>
-                <p className="text-lg text-muted-foreground">
-                  Whether you need rapid prototyping, custom parts manufacturing, or complete product development support, 
-                  Laswell Robotics has the expertise and technology to bring your vision to life.
+                  From rapid prototyping to small-batch production, our team combines design-for-manufacture expertise with
+                  dependable delivery so you can move from concept to product with confidence.
                 </p>
               </div>
             </Card>
+
+            {/* Quick stats */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+              <Card className="p-6 text-center">
+                <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">50+ </div>
+                <div className="text-sm text-muted-foreground">Projects Delivered</div>
+              </Card>
+              <Card className="p-6 text-center">
+                <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">2</div>
+                <div className="text-sm text-muted-foreground">Locations: Ahmedabad & Surat</div>
+              </Card>
+              <Card className="p-6 text-center hidden lg:block">
+                <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">24h</div>
+                <div className="text-sm text-muted-foreground">Average Quote Response</div>
+              </Card>
+            </div>
           </section>
 
-          <section>
-            <h2 className="text-3xl font-heading font-bold mb-8 text-center">
-              Get in Touch
-            </h2>
-            <Card className="p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
+          {/* Get in touch */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-heading font-bold mb-6 text-center">Get in Touch</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {contacts.map((c) => (
+                <Card key={c.title} className="p-8 text-center border-2">
+                  <div className="mx-auto mb-4 h-12 w-12 rounded-xl bg-gradient-to-tr from-primary/20 to-accent/20 flex items-center justify-center">
+                    <c.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="text-sm text-muted-foreground">{c.title}</div>
+                  {c.href ? (
+                    <a href={c.href} className="block font-semibold mt-1 hover:underline">
+                      {c.value}
+                    </a>
+                  ) : (
+                    <div className="font-semibold mt-1">{c.value}</div>
+                  )}
+                </Card>
+              ))}
+            </div>
+          </section>
 
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="How can we help you?"
-                    rows={6}
-                    required
-                  />
-                </div>
-
-                <Button type="submit" className="w-full">
-                  Send Message
-                </Button>
-              </form>
-            </Card>
+          <section className="text-center">
+            <Button
+              size="lg"
+              onClick={() => window.open(googleFormUrl, "_blank")}
+              className="px-10 text-base bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow"
+            >
+              REQUEST A QUOTE <ExternalLink className="ml-2 h-4 w-4" />
+            </Button>
           </section>
         </div>
       </main>
