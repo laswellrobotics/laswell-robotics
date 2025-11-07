@@ -15,11 +15,17 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       title: "3D Printing",
       description: "High-quality additive manufacturing for rapid prototyping and production",
       details: [
-        "FDM and SLA printing technologies",
-        "Wide range of materials (PLA, ABS, PETG, Nylon, Resins)",
-        "Precision up to 0.1mm layer height",
-        "Fast turnaround times",
-        "Post-processing services available"
+        "FDM (PLA/ABS/PETG/TPU/Nylon) & SLA (engineering resins)",
+        "Layer height 0.1–0.3 mm, typical tolerance ±0.2 mm or ±0.2%",
+        "Build volume up to 300 × 300 × 300 mm",
+        "Post-processing: sanding, priming, painting, vapor smoothing",
+        "Lead time: 1–3 business days"
+      ],
+      specs: [
+        { label: "Technologies", value: "FDM, SLA" },
+        { label: "Materials", value: "PLA, ABS, PETG, TPU, Nylon, Resins" },
+        { label: "Max Build", value: "300×300×300 mm" },
+        { label: "Tolerance", value: "±0.2 mm or ±0.2%" }
       ]
     },
     {
@@ -28,11 +34,16 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       title: "Designing & Modeling",
       description: "Professional CAD design and 3D modeling services",
       details: [
-        "Custom CAD design from concepts",
-        "3D modeling and rendering",
-        "Design optimization for manufacturing",
-        "Technical drawings and documentation",
-        "File format conversion"
+        "Design from sketches or reference models",
+        "DFM optimization and tolerance analysis",
+        "Photorealistic rendering for presentations",
+        "Manufacturing drawings (GD&T)",
+        "Deliverables: STEP, STL, DXF, PDF"
+      ],
+      specs: [
+        { label: "Tools", value: "Fusion 360, SolidWorks, Blender" },
+        { label: "Deliverables", value: "STEP, STL, IGES, DXF, PDF" },
+        { label: "NDA", value: "Available upon request" }
       ]
     },
     {
@@ -41,11 +52,16 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       title: "Machining Services",
       description: "Precision CNC machining for metal and plastic parts",
       details: [
-        "Multi-axis CNC milling and turning",
-        "Materials: Aluminum, Steel, Brass, Plastics",
-        "Tight tolerances (±0.001\")",
-        "Surface finishing options",
-        "Small to medium batch production"
+        "3-axis and 4-axis milling, CNC turning",
+        "Materials: Aluminum, Steel, Brass, Copper, Delrin, Acrylic",
+        "Typical tolerance ±0.05 mm",
+        "Finishes: bead blast, anodize, powder coat",
+        "Batch sizes: prototypes to small production runs"
+      ],
+      specs: [
+        { label: "Max Envelope", value: "250×250×100 mm (milling)" },
+        { label: "Tolerances", value: "±0.05 mm typical" },
+        { label: "Surface Finish", value: "Ra 1.6–3.2 µm (as-machined)" }
       ]
     },
     {
@@ -54,11 +70,16 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       title: "Laser Cutting & Engraving",
       description: "High-precision laser cutting and engraving services",
       details: [
-        "CO2 and fiber laser systems",
-        "Materials: Acrylic, Wood, Metal, Leather",
-        "Precision cutting and engraving",
-        "Custom designs and patterns",
-        "Rapid prototyping to production"
+        "CO2 (non-metals) & fiber laser (metals)",
+        "Work area up to 600 × 400 mm",
+        "Acrylic up to 10 mm; plywood up to 8 mm; stainless up to 1.5 mm",
+        "Engraving 300–1000 DPI",
+        "Batch and serial engraving supported"
+      ],
+      specs: [
+        { label: "Work Area", value: "600×400 mm" },
+        { label: "Resolution", value: "300–1000 DPI" },
+        { label: "File Types", value: "DXF, SVG, AI, PDF" }
       ]
     },
     {
@@ -67,14 +88,19 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
       title: "Custom PCB Design",
       description: "Professional PCB design and prototyping",
       details: [
-        "Schematic capture and PCB layout",
-        "Multi-layer board design",
-        "Component selection and sourcing",
-        "Prototype assembly",
-        "Testing and validation"
+        "Schematic capture, layout, BOM & DFM checks",
+        "Up to 6 layers, 6/6 mil trace/space typical",
+        "High-speed constraints, impedance control",
+        "Prototype assembly (SMD/THT)",
+        "Bring-up testing and validation"
+      ],
+      specs: [
+        { label: "Layers", value: "2–6" },
+        { label: "Trace/Space", value: "6/6 mil typical" },
+        { label: "Deliverables", value: "Gerbers, BoM, Pick&Place, Schematics" }
       ]
     }
-  ];
+  ] as const;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -111,6 +137,18 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
                           <li key={index}>{detail}</li>
                         ))}
                       </ul>
+
+                      {"specs" in service && (
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {(service as any).specs?.map((s: { label: string; value: string }, i: number) => (
+                            <div key={i} className="rounded-md border p-3 text-sm">
+                              <div className="text-muted-foreground">{s.label}</div>
+                              <div className="font-medium">{s.value}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
                       <Button 
                         onClick={() => window.open(googleFormUrl, '_blank')}
                         className="mt-4"
