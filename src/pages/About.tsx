@@ -76,6 +76,44 @@ export default function About() {
             </div>
           </section>
 
+          {/* Professional overview */}
+          <section className="mb-12 grid md:grid-cols-2 gap-6">
+            <Card className="p-8">
+              <h3 className="font-heading font-bold text-lg mb-3">What we do</h3>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                <li>Rapid prototyping and small‑batch production</li>
+                <li>End‑to‑end product development (mechanical, electronics, firmware)</li>
+                <li>Custom jigs, automation and test fixtures</li>
+                <li>Design reviews and DFM consulting</li>
+              </ul>
+            </Card>
+
+            <Card className="p-8">
+              <h3 className="font-heading font-bold text-lg mb-3">How we work</h3>
+              <ol className="list-decimal list-inside text-muted-foreground space-y-2">
+                <li>Brief & requirements</li>
+                <li>Proposal with cost and lead time</li>
+                <li>Build & quality checks</li>
+                <li>Delivery and support</li>
+              </ol>
+            </Card>
+          </section>
+
+          {/* Capabilities snapshot */}
+          <section className="mb-16">
+            <Card className="p-8">
+              <h3 className="font-heading font-bold text-lg mb-3">Core capabilities</h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-muted-foreground">
+                <div>3D Printing (FDM/SLA)</div>
+                <div>CNC Milling & Turning</div>
+                <div>Laser Cutting & Engraving</div>
+                <div>CAD Design & Simulation</div>
+                <div>PCB Design & Assembly</div>
+                <div>System Integration</div>
+              </div>
+            </Card>
+          </section>
+
           {/* Get in touch */}
           <section className="mb-12">
             <h2 className="text-3xl font-heading font-bold mb-6 text-center">Get in Touch</h2>
