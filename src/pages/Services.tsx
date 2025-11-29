@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Box, Cpu, Hexagon, Zap, CircuitBoard, ExternalLink, Wrench } from "lucide-react";
+import { QuoteForm } from "@/components/QuoteForm";
 
 // service images
 import img3d from "@/assets/service-3d-printing.jpg";
@@ -11,8 +12,6 @@ import imgMachining from "@/assets/service-machining.jpg";
 import imgLaser from "@/assets/service-laser.jpg";
 
 export default function Services() {
-  // Replace this with your actual Google Form URL
-const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQuXUkT0MthngXRUnx1Ewo1kc8ZYjbO9wzg/viewform?usp=dialog";
 
   const services = [
     {
@@ -135,7 +134,7 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-1">
         <section className="py-20 bg-background">
           <div className="container">
@@ -180,9 +179,13 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
                         </div>
                       )}
 
-                      <Button onClick={() => window.open(googleFormUrl, '_blank')}>
-                        Request Quote <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
+                      <QuoteForm
+                        trigger={
+                          <Button>
+                            Request Quote <ExternalLink className="ml-2 h-4 w-4" />
+                          </Button>
+                        }
+                      />
                     </div>
 
                     {!ImageFirst && (
@@ -214,9 +217,13 @@ const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQ
             </div>
 
             <div className="text-center mt-10">
-              <Button onClick={() => window.open(googleFormUrl, '_blank')} size="lg" className="px-10">
-                Start a Custom Project <ExternalLink className="ml-2 h-4 w-4" />
-              </Button>
+              <QuoteForm
+                trigger={
+                  <Button size="lg" className="px-10">
+                    Start a Custom Project <ExternalLink className="ml-2 h-4 w-4" />
+                  </Button>
+                }
+              />
             </div>
           </div>
         </section>

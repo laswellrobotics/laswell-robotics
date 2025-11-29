@@ -3,10 +3,9 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { QuoteForm } from "@/components/QuoteForm";
 
 export default function About() {
-  const googleFormUrl =
-    "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQuXUkT0MthngXRUnx1Ewo1kc8ZYjbO9wzg/viewform?usp=dialog";
 
   const contacts = [
     {
@@ -31,7 +30,7 @@ export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-1 py-20">
         <div className="container max-w-5xl">
           <section className="mb-20 text-center">
@@ -137,13 +136,16 @@ export default function About() {
           </section>
 
           <section className="text-center">
-            <Button
-              size="lg"
-              onClick={() => window.open(googleFormUrl, "_blank")}
-              className="px-10 text-base bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow"
-            >
-              REQUEST A QUOTE <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
+            <QuoteForm
+              trigger={
+                <Button
+                  size="lg"
+                  className="px-10 text-base bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 shadow"
+                >
+                  REQUEST A QUOTE <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+              }
+            />
           </section>
         </div>
       </main>

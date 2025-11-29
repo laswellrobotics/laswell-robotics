@@ -6,6 +6,7 @@ import { ArrowRight, Box, Cpu, Hexagon, Zap, CircuitBoard, Wrench } from "lucide
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-robotics.jpg";
 import { Reveal } from "@/components/Reveal";
+import { QuoteForm } from "@/components/QuoteForm";
 // service images
 import img3d from "@/assets/service-3d-printing.jpg";
 import imgDesign from "@/assets/service-design.jpg";
@@ -14,7 +15,6 @@ import imgLaser from "@/assets/service-laser.jpg";
 
 export default function Home() {
   const navigate = useNavigate();
-  const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQuXUkT0MthngXRUnx1Ewo1kc8ZYjbO9wzg/viewform?usp=dialog";
 
   const services = [
     {
@@ -137,10 +137,10 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
@@ -149,7 +149,7 @@ export default function Home() {
         {/* Subtle animated blobs (pure CSS, very light) */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-gradient-to-tr from-primary/40 to-accent/40 blur-3xl animate-blob" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-gradient-to-tr from-accent/30 to-primary/30 blur-3xl animate-blob animation-delay-2000" />
-        
+
         <div className="relative container z-10 text-center py-20">
           <Reveal>
             <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-foreground mb-6">
@@ -163,8 +163,8 @@ export default function Home() {
           </Reveal>
           <Reveal delay={200}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 variant="secondary"
                 onClick={() => navigate('/services')}
                 className="text-lg"
@@ -172,13 +172,13 @@ export default function Home() {
                 Explore Services
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            <Button 
-              size="lg"
-              onClick={() => window.open(googleFormUrl, '_blank')}
-              className="text-lg"
-            >
-              Request a Quote
-            </Button>
+              <QuoteForm
+                trigger={
+                  <Button size="lg" className="text-lg">
+                    Request a Quote
+                  </Button>
+                }
+              />
             </div>
           </Reveal>
         </div>
@@ -232,12 +232,12 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-10">Our Edge</h2>
           </Reveal>
           <div className="grid md:grid-cols-3 gap-6">
-            {[ 
+            {[
               { t: "Engineering-first", d: "Design reviews and DFM by practicing engineers" },
               { t: "Reliable timelines", d: "Clear schedules and proactive communication" },
               { t: "Quality built-in", d: "Material checks and QC on every batch" },
-            ].map((f,i)=> (
-              <Reveal key={f.t} delay={i*120}>
+            ].map((f, i) => (
+              <Reveal key={f.t} delay={i * 120}>
                 <Card className="p-6 h-full">
                   <div className="text-lg font-heading font-semibold mb-2">{f.t}</div>
                   <p className="text-muted-foreground text-sm">{f.d}</p>
@@ -306,9 +306,13 @@ export default function Home() {
           <Card className="p-8 md:p-12 text-center bg-gradient-to-r from-primary to-accent">
             <h3 className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground mb-3">Have a part, product or idea?</h3>
             <p className="text-primary-foreground/90 mb-6">Share your CAD or sketches and get a fast, actionable quote.</p>
-            <Button size="lg" variant="secondary" onClick={() => window.open(googleFormUrl, '_blank')}>
-              Request a Quote <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <QuoteForm
+              trigger={
+                <Button size="lg" variant="secondary">
+                  Request a Quote <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              }
+            />
           </Card>
         </div>
       </section>
@@ -322,8 +326,8 @@ export default function Home() {
           <p className="text-xl text-shop-accent-foreground/90 mb-6">
             Coming Soon! Browse our curated selection of robotics components and electronics
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             variant="secondary"
             onClick={() => navigate('/shop')}
           >

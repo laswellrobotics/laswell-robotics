@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { QuoteForm } from "@/components/QuoteForm";
+
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,8 +22,7 @@ export const Header = () => {
   }, []);
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm font-medium transition-colors relative group ${
-      isActive ? "text-primary" : "hover:text-primary"
+    `text-sm font-medium transition-colors relative group ${isActive ? "text-primary" : "hover:text-primary"
     }`;
 
   return (
@@ -61,14 +62,14 @@ export const Header = () => {
               About
               <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-gradient-to-r from-primary to-accent transition-all group-hover:w-full" />
             </NavLink>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQuXUkT0MthngXRUnx1Ewo1kc8ZYjbO9wzg/viewform?usp=dialog"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-full bg-gradient-to-r from-primary to-accent px-4 py-2 text-sm font-semibold text-primary-foreground shadow hover:opacity-90"
-            >
-              Request Quote
-            </a>
+            <QuoteForm
+              trigger={
+                <button className="inline-flex items-center rounded-full bg-gradient-to-r from-primary to-accent px-4 py-2 text-sm font-semibold text-primary-foreground shadow hover:opacity-90">
+                  Request Quote
+                </button>
+              }
+            />
+
           </nav>
 
           {/* Mobile Menu Button */}
@@ -96,15 +97,14 @@ export const Header = () => {
               <Link to="/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>
                 About
               </Link>
-              <a 
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeQLnEpZc5Dl_jaQuXUkT0MthngXRUnx1Ewo1kc8ZYjbO9wzg/viewform?usp=dialog"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Request Quote
-              </a>
+              <QuoteForm
+                trigger={
+                  <button className="text-sm font-medium hover:text-primary transition-colors text-left">
+                    Request Quote
+                  </button>
+                }
+              />
+
             </nav>
           </div>
         )}
