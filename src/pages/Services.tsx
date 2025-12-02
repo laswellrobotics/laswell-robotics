@@ -5,11 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Box, Cpu, Hexagon, Zap, CircuitBoard, ExternalLink, Wrench } from "lucide-react";
 import { QuoteForm } from "@/components/QuoteForm";
 
-// service images
-import img3d from "@/assets/service-3d-printing.jpg";
-import imgDesign from "@/assets/service-design.jpg";
-import imgMachining from "@/assets/service-machining.jpg";
-import imgLaser from "@/assets/service-laser.jpg";
+
 
 export default function Services() {
 
@@ -19,7 +15,7 @@ export default function Services() {
       icon: Box,
       title: "3D Printing",
       description: "High-quality additive manufacturing for rapid prototyping and production",
-      image: img3d,
+      image: "/3D _Printing.PNG",
       details: [
         "FDM (PLA/ABS/PETG/TPU/Nylon) & SLA (engineering resins)",
         "Layer height 0.1–0.3 mm, typical tolerance ±0.2 mm or ±0.2%",
@@ -39,7 +35,7 @@ export default function Services() {
       icon: Cpu,
       title: "Designing & Modeling",
       description: "Professional CAD design and 3D modeling services",
-      image: imgDesign,
+      image: "/Designing_Modeling.PNG",
       details: [
         "Design from sketches or reference models",
         "DFM optimization and tolerance analysis",
@@ -58,7 +54,7 @@ export default function Services() {
       icon: Hexagon,
       title: "Machining Services",
       description: "Precision CNC machining for metal and plastic parts",
-      image: imgMachining,
+      image: "/Machining_Services.PNG",
       details: [
         "3-axis and 4-axis milling, CNC turning",
         "Materials: Aluminum, Steel, Brass, Copper, Delrin, Acrylic",
@@ -77,7 +73,7 @@ export default function Services() {
       icon: Zap,
       title: "Laser Cutting & Engraving",
       description: "High-precision laser cutting and engraving services",
-      image: imgLaser,
+      image: "/Laser Cutting & Engraving.PNG",
       details: [
         "CO2 (non-metals) & fiber laser (metals)",
         "Work area up to 600 × 400 mm",
@@ -96,7 +92,7 @@ export default function Services() {
       icon: CircuitBoard,
       title: "Custom PCB Design",
       description: "Professional PCB design and prototyping",
-      image: imgDesign,
+      image: "/Custom_PCB_Design.PNG",
       details: [
         "Schematic capture, layout, BOM & DFM checks",
         "Up to 6 layers, 6/6 mil trace/space typical",
@@ -115,7 +111,7 @@ export default function Services() {
       icon: Wrench,
       title: "Custom Projects",
       description: "Turnkey product development and one‑off automation",
-      image: imgMachining,
+      image: "/Custom _Projects.PNG",
       details: [
         "Discovery & requirements definition",
         "System design: mechanics, electronics, control",
