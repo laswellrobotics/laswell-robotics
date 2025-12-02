@@ -69,6 +69,26 @@ transporter.verify((error, success) => {
   }
 });
 
+// Helper to log leads
+const logLead = (type, data) => {
+  const leadsFile = path.join(__dirname, '..', 'leads.json');
+  let leads = [];
+  if (fs.existsSync(leadsFile)) {
+    try {
+      leads = JSON.parse(fs.readFileSync(leadsFile, 'utf8'));
+    } catch (e) {
+      console.error('Error reading leads file:', e);
+    }
+  }
+  leads.push({
+    id: Date.now(),
+    type,
+    timestamp: new Date().toISOString(),
+    ...data
+  });
+  fs.writeFileSync(leadsFile, JSON.stringify(leads, null, 2));
+};
+
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   try {
@@ -77,6 +97,9 @@ app.post('/api/contact', async (req, res) => {
     if (!name || !email || !message) {
       return res.status(400).json({ error: 'Name, email, and message are required' });
     }
+
+    // Log the lead
+    logLead('contact', { name, email, phone, message });
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -105,7 +128,12 @@ app.post('/api/contact', async (req, res) => {
       replyTo: email
     };
 
-    await transporter.sendMail(mailOptions);
+    // Try to send email, but don't fail if it's not configured (for demo)
+    if (process.env.EMAIL_USER) {
+      await transporter.sendMail(mailOptions);
+    } else {
+      console.log('Email not configured, skipping email send. Lead logged to leads.json');
+    }
 
     res.status(200).json({
       success: true,
@@ -129,6 +157,17 @@ app.post('/api/quote', upload.single('file'), async (req, res) => {
         error: 'Contact name, email, and service type are required'
       });
     }
+
+    // Log the lead
+    logLead('quote', {
+      contactName,
+      contactEmail,
+      phone,
+      serviceType,
+      projectDetails,
+      hasFile: !!req.file,
+      fileName: req.file ? req.file.originalname : null
+    });
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -170,7 +209,11 @@ app.post('/api/quote', upload.single('file'), async (req, res) => {
       }] : []
     };
 
-    await transporter.sendMail(mailOptions);
+    if (process.env.EMAIL_USER) {
+      await transporter.sendMail(mailOptions);
+    } else {
+      console.log('Email not configured, skipping email send. Quote logged to leads.json');
+    }
 
     // Clean up uploaded file after sending email
     if (req.file) {

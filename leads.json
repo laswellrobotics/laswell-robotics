@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1764675136160,
+    "type": "quote",
+    "timestamp": "2025-12-02T11:32:16.160Z",
+    "contactName": "Test User",
+    "contactEmail": "test@example.com",
+    "phone": "",
+    "serviceType": "3D Printing",
+    "projectDetails": "Testing quote submission.c:\\Users\\ASUS\\Desktop\\Laswell Robotics\\laswell-robotics-main\\test_upload.stl",
+    "hasFile": false,
+    "fileName": null
+  }
+]

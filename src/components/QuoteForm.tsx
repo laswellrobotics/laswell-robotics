@@ -30,6 +30,7 @@ export const QuoteForm = ({ trigger }: QuoteFormProps) => {
         projectDetails: "",
     });
     const [file, setFile] = useState<File | null>(null);
+    const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -60,7 +61,7 @@ export const QuoteForm = ({ trigger }: QuoteFormProps) => {
                 formDataToSend.append("file", file);
             }
 
-            const response = await fetch("http://localhost:3001/api/quote", {
+            const response = await fetch("/api/quote", {
                 method: "POST",
                 body: formDataToSend,
             });
@@ -68,7 +69,8 @@ export const QuoteForm = ({ trigger }: QuoteFormProps) => {
             const data = await response.json();
 
             if (response.ok) {
-                toast.success("Quote request submitted successfully! We'll get back to you soon.");
+                setSuccess(true);
+                toast.success("Quote request submitted successfully!");
                 setFormData({
                     contactName: "",
                     contactEmail: "",
@@ -77,7 +79,6 @@ export const QuoteForm = ({ trigger }: QuoteFormProps) => {
                     projectDetails: "",
                 });
                 setFile(null);
-                setOpen(false);
             } else {
                 toast.error(data.error || "Failed to submit quote request. Please try again.");
             }
@@ -88,6 +89,43 @@ export const QuoteForm = ({ trigger }: QuoteFormProps) => {
             setIsSubmitting(false);
         }
     };
+
+    const handleClose = () => {
+        setOpen(false);
+        // Reset success state after a delay so it's fresh next time
+        setTimeout(() => setSuccess(false), 500);
+    };
+
+    if (success) {
+        return (
+            <Dialog open={open} onOpenChange={handleClose}>
+                <DialogTrigger asChild>
+                    {trigger || (
+                        <Button>
+                            <Upload className="mr-2 h-4 w-4" />
+                            Request Quote
+                        </Button>
+                    )}
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px] text-center py-12">
+                    <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <Upload className="h-8 w-8 text-green-600" />
+                    </div>
+                    <DialogTitle className="text-2xl font-heading text-green-700 mb-2">Request Received!</DialogTitle>
+                    <DialogDescription className="text-lg">
+                        Thank you, {formData.contactName}. We have received your quote request.
+                        <br />
+                        Our engineering team will review your files and get back to you within 24 hours.
+                    </DialogDescription>
+                    <div className="mt-8">
+                        <Button onClick={handleClose} size="lg" className="px-8">
+                            Close
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
+        );
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
