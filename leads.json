@@ -10,5 +10,17 @@
     "projectDetails": "Testing quote submission.c:\\Users\\ASUS\\Desktop\\Laswell Robotics\\laswell-robotics-main\\test_upload.stl",
     "hasFile": false,
     "fileName": null
+  },
+  {
+    "id": 1764675960686,
+    "type": "quote",
+    "timestamp": "2025-12-02T11:46:00.686Z",
+    "contactName": "daksh",
+    "contactEmail": "khuntrudresh12@gmail.com",
+    "phone": "+918469802004",
+    "serviceType": "3D Printing",
+    "projectDetails": "",
+    "hasFile": false,
+    "fileName": null
   }
 ]

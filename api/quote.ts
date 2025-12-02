@@ -45,12 +45,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         await runMiddleware(req, res, upload.single('file'));
 
         // Access fields from req.body (populated by multer)
-        // Note: req.body might be null prototype object, so we cast or access carefully
         const body = (req as any).body || {};
         const { contactName, contactEmail, phone, serviceType, projectDetails } = body;
         const file = (req as any).file;
 
-        html: `
+        if (!contactName || !contactEmail || !serviceType) {
+            return res.status(400).json({
+                error: 'Contact name, email, and service type are required'
+            });
+        }
+
+        // Check for environment variables
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.error('Missing environment variables: EMAIL_USER or EMAIL_PASS');
+            return res.status(500).json({
+                error: 'Server configuration error: Missing email credentials. Please check Vercel environment variables.'
+            });
+        }
+
+        // Configure Nodemailer transporter
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: process.env.RECIPIENT_EMAIL || 'laswellrobotics@gmail.com',
+            subject: `New Quote Request: ${serviceType} - ${contactName}`,
+            html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 10px;">
             New Quote Request
@@ -80,27 +106,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         </div>
       `,
             replyTo: contactEmail,
-                attachments: file ? [{
-                    filename: file.originalname,
-                    content: file.buffer
-                }] : []
-    };
+            attachments: file ? [{
+                filename: file.originalname,
+                content: file.buffer
+            }] : []
+        };
 
-    if (process.env.EMAIL_USER) {
         await transporter.sendMail(mailOptions);
-    } else {
-        console.log('Email not configured, skipping email send.');
+
+        res.status(200).json({
+            success: true,
+            message: 'Quote request submitted successfully'
+        });
+
+    } catch (error) {
+        console.error('Error processing quote request:', error);
+        res.status(500).json({
+            error: 'Failed to submit quote request. Please try again later.'
+        });
     }
-
-    res.status(200).json({
-        success: true,
-        message: 'Quote request submitted successfully'
-    });
-
-} catch (error) {
-    console.error('Error processing quote request:', error);
-    res.status(500).json({
-        error: 'Failed to submit quote request. Please try again later.'
-    });
-}
 }
